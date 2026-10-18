@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.blue.min.css">
+  <style>
+    @media (min-width: 1280px) { body > main { max-width: 1080px; } }
+    [hidden] { display: none !important; }
+  </style>
+  <title>How many points do I have?</title>
+</head>
+<body>
+<main>
+  <h1>How many points do I have?</h1>
+  <p>On this site, you can check how many point you've earned for problem sets and programming assignments.</p>
+  <p><small>The data on this site was last updated on <strong>18 October, 16:03</strong>. If you acquired some points after that date, they are not yet reflected here.</small></p>
+  <form id="form">
+    <fieldset role="group">
+      <input id="password" type="password" placeholder="Your secret key (provided to you by the instructor)" aria-label='password' required>
+      <button id="submit" type="submit">Check</button>
+    </fieldset>
+  </form>
+  <section id="progress" hidden><progress /></section>
+  <section id="errmsg" hidden>
+    <p><strong>Invalid secret key!</strong></p>
+  </section>
+  <section id="result" hidden>
+    <p>
+      As of <strong>18 October, 16:03</strong>, you've got:
+      <ul>
+        <li><strong id="data0"></strong> points for problem sets,</li>
+        <li><strong id="data1"></strong> points for programming assignments.</li>
+      </ul>
+    </p>
+    <p><small>The data on this site may contain errors. If you believe your point totals are incorrect, please contact the instructors.</small></p>
+    <p><small>To log out, simply close this page.</small></p>
+  </section>
+</main>
+<script>
+const records = [{"payload": "69992b57e0a2ce8c642dc6a4ea8385d76770c843330b327199f03b1c6dec153fb2da4a58f3c6e9449ee0507f36ef9545f759f5a8875d4b627a9c3b750f053d4b", "salt": "fa8bf5e60b2fc92b81bcdae34339a03c"}, {"payload": "003338fc8a7b875a70944e7a26ea5797e5b251411e47538a7adbc183d440e1ff1ecc4f7ce73519f24b0c0d8e46ae8515b70a97f6795f185d781c5b27c112d63f", "salt": "c3834a558f9955617efa1a47f0ad1684"}, {"payload": "c894908e6e52243876c015ded4bc52cab13029c1e72ba55190754011ba565b8d459e6516b6534b2aac9c82ea42436b46b349b681b02335ae2ecb846d6815488b", "salt": "c917b382f41a4a3150ab60959026444e"}, {"payload": "7efb3dacdb38af0087be84fe9e25cecce26fed056fb994d09fffb07a1ea319ee222559120c120ba9c32add5cc2c168b25337e51ce8e3d8ed2f02ab7949cdc16c", "salt": "b13a7ab3e5493785cbbe67d6b05371f2"}, {"payload": "9bdbbb3764307e74c66d4a4f3539d435cf265b61a9f197857b709ff937bc9a9321678448a817a981b93e7c8c4547fef039c5b8a45516eaf2c4fe81524e8b5d04", "salt": "b6fe904a32a4aa654537b0ac3a7334e2"}, {"payload": "9faee49e0792e51938611d161e97e7768d073e027239c4303da37c9214284ef2981abd85efc8dae29e91ceb24bf5041c165c79b5cd5f2d431c19737bef4b5185", "salt": "48ca9641043f877b1e4f8c40846da166"}, {"payload": "49d053c2d3e86197cf33323ce7e0960b4b1428dcbae9701b12db152cec013f524f454eee267d8e887660e52c8fb97af88ea551cc2472a7662cab7724d3b784ca", "salt": "a45a063ee4a54010b1dbbdce47bb7d77"}, {"payload": "a03cca7aab7873fae3e29c248dc9659d125a39b64a7676f2d7002103e352016364b7df5a2a5f8e475509b013697dcb1eea2b699cd9f21359d9b29f251fafbe95", "salt": "260cebe99cebea39e45bee0702abb351"}, {"payload": "c06cc903d9234ac80b48b87b66594e8dc53f180bcf00174091ba9f065b4d6aabf94b9de3a22a4217290bafe5b444db0f4abe82f71b142951d1be6925be6de23e", "salt": "e07dde044e633e60851794a1af814184"}, {"payload": "9d1ab3c35b715eda3b417510594404e7fb8cf031817fa97670f7ab0dca2ea0ae562955c73984484fa504964ea142b4f89aee255068bc3674a1c42f4ee7f5bde2", "salt": "480bf85b46e15129d2f7d6ecb48ae9f5"}, {"payload": "852eda9be41eaf22358aaa0d1dcf025c1aa15f603120b338c46885be041352141a4e8242bf6c3a0656003b8b8de30888b6dbc4639254a588dac3d54d5df0dae9", "salt": "a6a221475942c7d5f701a36d189fff36"}, {"payload": "6f34d6f0bd95fe1cd1643822becbf2c697753acc4eb03d25564c6caf8ef36b06666c391234ebf4f914c702ba4f40984cc35940a467293c5dc4cdfdd678ed5a41", "salt": "1f1a4761c9d29ac18870365214e70ef3"}, {"payload": "6d4c5e815162e21dba6f49bed02ea503fa066e6b96c441a79345a07042c30b8c83fe1d984a190ef281b95375e59d90661f7b6f1c3cb00129712fbab7a76e7150", "salt": "986cbcbc9b68373eef1cb68bc2363655"}, {"payload": "af5d35256221d2d73e828c6f5a6f32f65d336c0f94e5f155bca47316a3809c8394a8685b2e7f857ad2eff6671495f4da057f118604258f59daae03d114e29a14", "salt": "15e9b77473a14e5ec42c1296e3497e82"}, {"payload": "43210e152902256896c2d945320dade33c68c84e64464b0816e863067a718b0a90e0d6e86f1028b9a1276af39bc9a7cb134765da7a7bab1e671239b654d2e3a3", "salt": "380899e5b5e380ad3e60a336093ba7e4"}, {"payload": "0c38f4cd9c01d2a0b94378150d5370ca97f6b72bf9fa9801456b50e8fcf5b77e1e13ce61e45c6f187d69949e208a328d01fd5911a5ca5a576a7389f7284021a3", "salt": "b295132a2528d9e64f4a25a5e7e593cb"}, {"payload": "0eb85afdc2b45314dce574f9c4b37ea2c7ec60181aa919c8503297548ae0cf502342888edd1c2463cf87a143a636acd41b432281731e6055190c1f81d00e9ed4", "salt": "1a808fc17be5241a8a3f0d88368b03a0"}, {"payload": "bbff9c0c220eb0276c23c25e61e3ecce2b64189102b568f0bd5f41c5ddf7e9317d7a4f5de57192b294cfd2edcd6c40f96037b5d06ec7ae7385b5dede1a9b9d10", "salt": "e69c87b6ce14f0160acdf1fab836a950"}, {"payload": "0def074d77beefb02a1f4f35f132b237d9b8e17c85af708c669fae293f3c943d55dc91ca1c7ef05bf2203c344b76cc544ffe2cd30da995eb5a87f21fc0b597b2", "salt": "0fb51bdd991aaa0148102fc405e38841"}];
+const encode = s => new TextEncoder().encode(s);
+const hexToBytes = s => Uint8Array.from(s.match(/../g) || [], h => parseInt(h, 16));
+const bytesToHex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+
+async function pbkdf2(text, salt, iterations, hash) {
+  const material = await crypto.subtle.importKey('raw', encode(text), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', salt: encode(salt), iterations, hash }, material, 256
+  );
+  return bytesToHex(bits);
+}
+
+async function decrypt(record, password) {
+  let keyHex = await pbkdf2(password, record.salt, 1000, 'SHA-1');
+  keyHex = await pbkdf2(keyHex, record.salt, 14000, 'SHA-256');
+  keyHex = await pbkdf2(keyHex, record.salt, 585000, 'SHA-256');
+  const keyBytes = hexToBytes(keyHex);
+  const signed = record.payload.slice(64);
+  const signature = hexToBytes(record.payload.slice(0, 64));
+  const macKey = await crypto.subtle.importKey(
+    'raw', keyBytes, { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']
+  );
+  if (!await crypto.subtle.verify('HMAC', macKey, signature, encode(signed))) {
+    throw new Error('Wrong password');
+  }
+  const aesKey = await crypto.subtle.importKey('raw', keyBytes, 'AES-CBC', false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt(
+    { name: 'AES-CBC', iv: hexToBytes(signed.slice(0, 32)) },
+    aesKey, hexToBytes(signed.slice(32))
+  );
+  return new TextDecoder().decode(plain);
+}
+
+const form = document.getElementById('form');
+const password = document.getElementById('password');
+const progress = document.getElementById('progress');
+const errmsg = document.getElementById('errmsg');
+const result = document.getElementById('result');
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  password.removeAttribute('aria-invalid');
+  progress.hidden = false;
+  errmsg.hidden = true;
+  result.hidden = true;
+  for (let record of records) {
+    try {
+      const text = await decrypt(record, password.value);
+      const data = JSON.parse(text);
+      document.getElementById('data0').textContent = data[0];
+      document.getElementById('data1').textContent = data[1];
+      password.setAttribute('aria-invalid', false);
+      progress.hidden = true;
+      result.hidden = false;
+      return;
+    } catch {}
+  }
+  password.setAttribute('aria-invalid', true);
+  progress.hidden = true;
+  errmsg.hidden = false;
+});
+</script>
+</body>
+</html>
